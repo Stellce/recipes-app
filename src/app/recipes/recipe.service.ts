@@ -1,19 +1,45 @@
 import {Recipe} from "./recipe.model";
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({providedIn: 'root'})
 export class RecipeService {
-  recipes: Recipe[] = [
-    {name: 'Test Recipe', desc: 'test desc', imagePath: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&webp=true&resize=300,272"},
-    {name: 'Another test Recipe', desc: 'test desc', imagePath: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&webp=true&resize=300,272"},
+  private recipes: Recipe[] = [
+    {
+      name: 'Test Recipe',
+      desc: 'test desc',
+      imagePath: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&webp=true&resize=300,272",
+      ingredients: [
+        {
+          name: 'avocado',
+          amount: 3
+        },
+        {
+          name: 'meat',
+          amount: 1
+        }
+      ]
+    },
+    {
+      name: 'Another test Recipe',
+      desc: 'test desc',
+      imagePath: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&webp=true&resize=300,272",
+      ingredients: [
+        {
+          name: 'Buns',
+          amount: 2
+        },
+        {
+          name: 'meat',
+          amount: 1
+        }
+      ]
+    },
   ];
+  recipeSelected = new EventEmitter<Recipe>();
+  // selectedRecipe: Recipe;
 
-  selectedRecipe: Recipe;
-
-  selectRecipe(recipe: Recipe) {
-    this.selectedRecipe = recipe;
+  getRecipes() {
+    return this.recipes.slice();
   }
 
 }
