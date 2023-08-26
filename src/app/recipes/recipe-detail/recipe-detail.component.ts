@@ -12,24 +12,21 @@ import {Subject, Subscription} from "rxjs";
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit{
-  @Input('recipe') recipe: Recipe;
-  id = this.route.snapshot.params.id;
-  idSub = new Subscription();
+  recipe: Recipe;
+  id: number;
 
   constructor(private shoppingListService: ShoppingListService, private recipeService: RecipeService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    // this.idSub = this.route.params.subscribe((params: Params) => {
-    //     console.log('subscribed')
-    //     this.id = params.id
-    //     console.log(params)
-    //     this.recipe = this.recipeService.findRecipe(this.id);
-    //   }
-    // )
+    this.route.params
+      .subscribe((params: Params) => {
+        this.id = +params.id;
+        this.recipe = this.recipeService.findRecipe(this.id);
+      }
+    )
   }
 
   onAddIngredients() {
     this.shoppingListService.addIngredients(this.recipe.ingredients);
-    console.log(this.route);
   }
 }

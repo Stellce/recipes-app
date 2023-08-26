@@ -1,7 +1,4 @@
 import {Recipe} from "./recipe.model";
-import {EventEmitter, Injectable} from "@angular/core";
-import {Subject} from "rxjs";
-
 // @Injectable({providedIn: 'root'})
 export class RecipeService {
   private recipes: Recipe[] = [
@@ -38,20 +35,13 @@ export class RecipeService {
       ]
     },
   ];
-  recipeSelected = new EventEmitter<Recipe>();
-  recipeUpdateListener = new Subject<Recipe>()
-  // selectedRecipe: Recipe;
 
   getRecipes() {
     return this.recipes.slice();
   }
 
-  getRecipeUpdateListener() {
-    return this.recipeUpdateListener.asObservable();
-  }
-
   findRecipe(id: number) {
-    return this.recipes.find(recipe => recipe.id === id);
+    return this.recipes.find(recipe => recipe.id === +id);
   }
 
 }

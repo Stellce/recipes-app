@@ -9,9 +9,6 @@ import {RecipeService} from "../recipe.service";
 })
 export class RecipeItemComponent {
   @Input('recipe') recipe: Recipe;
-  constructor(private recipeService: RecipeService) {}
-  onSelected() {
-    this.recipeService.recipeSelected.emit(this.recipe);
-  }
 
+  protected readonly String = String;
 }
