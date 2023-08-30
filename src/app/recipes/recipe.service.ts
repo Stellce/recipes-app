@@ -40,6 +40,12 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
+  getRecipe(id: number) {
+    return this.recipes.find((recipe) => {
+      return recipe.id === id;
+    });
+  }
+
   findRecipe(id: number) {
     return this.recipes.find(recipe => recipe.id === +id);
   }
