@@ -1,11 +1,13 @@
 import {Recipe} from "./recipe.model";
-// @Injectable({providedIn: 'root'})
+import {Subject} from "rxjs";
+import {Injectable} from "@angular/core";
+@Injectable({providedIn: 'root'})
 export class RecipeService {
+  recipesChanged = new Subject<Recipe[]>();
   private recipes: Recipe[] = [
     {
-      id: 1,
       name: 'Test Recipe',
-      desc: 'test desc',
+      description: 'test desc',
       imagePath: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&webp=true&resize=300,272",
       ingredients: [
         {
@@ -19,9 +21,8 @@ export class RecipeService {
       ]
     },
     {
-      id: 2,
       name: 'Another test Recipe',
-      desc: 'test desc',
+      description: 'test desc',
       imagePath: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&webp=true&resize=300,272",
       ingredients: [
         {
@@ -40,14 +41,27 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
-  getRecipe(id: number) {
-    return this.recipes.find((recipe) => {
-      return recipe.id === id;
-    });
+  getRecipe(index: number) {
+    return this.recipes[index];
   }
 
-  findRecipe(id: number) {
-    return this.recipes.find(recipe => recipe.id === +id);
+  // findRecipe(id: number) {
+  //   return this.recipes.find(recipe => recipe.id === +id);
+  // }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
   }
 
 }
